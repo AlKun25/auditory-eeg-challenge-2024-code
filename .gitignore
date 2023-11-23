@@ -170,3 +170,4 @@ task*/experiments/results*/
 speech-decoding/*
 speech-decoding
 .m
+data/

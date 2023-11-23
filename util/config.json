@@ -1,5 +1,5 @@
 {
-  "dataset_folder": "PATH/TO/sparrKULee",
+  "dataset_folder": "/home/kunal/Documents/code/auditory-eeg-challenge-2024-code/data",
   "derivatives_folder": "derivatives",
   "preprocessed_eeg_folder": "preprocessed_eeg",
   "preprocessed_stimuli_folder": "preprocessed_stimuli",

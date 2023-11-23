@@ -51,7 +51,7 @@ if __name__ == "__main__":
     epochs = 100
     patience = 5
     batch_size = 64
-    only_evaluate = True
+    only_evaluate = False
     number_mismatch = 4 # or 4
 
 
@@ -94,13 +94,16 @@ if __name__ == "__main__":
     model_path = os.path.join(results_folder, "model_{}_MM_{}_s_{}.h5".format(number_mismatch, window_length_s, stimulus_features[0]))
 
     if only_evaluate:
+        # model_path = os.path.join(results_folder, "model_{}_MM_{}_s_{}.h5".format(number_mismatch, window_length_s, stimulus_features[0]))
         model = tf.keras.models.load_model(model_path)
 
     else:
 
-        train_files = [x for x in glob.glob(os.path.join(data_folder, "train_-_*")) if os.path.basename(x).split("_-_")[-1].split(".")[0] in features]
+        train_files = [x for x in glob.glob(os.path.join(data_folder, "train", "train_-_*")) if os.path.basename(x).split("_-_")[-1].split(".")[0] in features]
+        print("No. of training files: ", len(train_files))
         # Create list of numpy array files
         train_generator = DataGenerator(train_files, window_length)
+        print(len(train_generator))
         import pdb
         dataset_train = create_tf_dataset(train_generator, window_length, batch_equalizer_fn,
                                           hop_length, batch_size,
@@ -109,7 +112,8 @@ if __name__ == "__main__":
                                           feature_dims=(64, stimulus_dimension))
 
         # Create the generator for the validation set
-        val_files = [x for x in glob.glob(os.path.join(data_folder, "val_-_*")) if os.path.basename(x).split("_-_")[-1].split(".")[0] in features]
+        val_files = [x for x in glob.glob(os.path.join(data_folder, "val", "val_-_*")) if os.path.basename(x).split("_-_")[-1].split(".")[0] in features]
+        print("No. of validation files: ", len(val_files))
         val_generator = DataGenerator(val_files, window_length)
         dataset_val = create_tf_dataset(val_generator,  window_length, batch_equalizer_fn,
                                           hop_length, batch_size,
@@ -143,8 +147,9 @@ if __name__ == "__main__":
             model.load_weights(model_path)
             # Evaluate the model on test set
             # Create a dataset generator for each test subject
-            test_files = [x for x in glob.glob(os.path.join(data_folder, "test_-_*")) if
+            test_files = [x for x in glob.glob(os.path.join(data_folder, "test", "test_-_*")) if
                           os.path.basename(x).split("_-_")[-1].split(".")[0] in features]
+            print("No. of test files: ", len(test_files))
             # Get all different subjects from the test set
             subjects = list(set([os.path.basename(x).split("_-_")[1] for x in test_files]))
             datasets_test = {}
