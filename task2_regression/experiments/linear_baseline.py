@@ -73,7 +73,7 @@ if __name__ == "__main__":
     epochs = 100
     patience = 5
     batch_size = 64
-    only_evaluate = True
+    only_evaluate = False
 
     # Get the path to the config gile
     experiments_folder = os.path.dirname(__file__)
@@ -116,13 +116,13 @@ if __name__ == "__main__":
         model.load_weights(model_path)
     else:
 
-        train_files = [x for x in glob.glob(os.path.join(data_folder, "train_-_*")) if os.path.basename(x).split("_-_")[-1].split(".")[0] in features ]
+        train_files = [x for x in glob.glob(os.path.join(data_folder, "train", "train_-_*")) if os.path.basename(x).split("_-_")[-1].split(".")[0] in features ]
         # Create list of numpy array files
         train_generator = DataGenerator(train_files, window_length)
         dataset_train = create_tf_dataset(train_generator, window_length, None, hop_length, batch_size, data_types=(tf.float32, tf.float32), feature_dims=(64, 10))
 
         # Create the generator for the validation set
-        val_files = [x for x in glob.glob(os.path.join(data_folder, "val_-_*")) if os.path.basename(x).split("_-_")[-1].split(".")[0] in features]
+        val_files = [x for x in glob.glob(os.path.join(data_folder, "val", "val_-_*")) if os.path.basename(x).split("_-_")[-1].split(".")[0] in features]
         val_generator = DataGenerator(val_files, window_length)
         dataset_val = create_tf_dataset(val_generator, window_length, None, hop_length, batch_size, data_types=(tf.float32, tf.float32), feature_dims=(64, 10))
 
@@ -143,7 +143,7 @@ if __name__ == "__main__":
 
     # Evaluate the model on test set
     # Create a dataset generator for each test subject
-    test_files = [x for x in glob.glob(os.path.join(data_folder, "test_-_*")) if os.path.basename(x).split("_-_")[-1].split(".")[0] in features]
+    test_files = [x for x in glob.glob(os.path.join(data_folder, "test", "test_-_*")) if os.path.basename(x).split("_-_")[-1].split(".")[0] in features]
     # Get all different subjects from the test set
     subjects = list(set([os.path.basename(x).split("_-_")[1] for x in test_files]))
     datasets_test = {}
