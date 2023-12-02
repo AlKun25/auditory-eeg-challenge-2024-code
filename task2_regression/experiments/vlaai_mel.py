@@ -3,7 +3,8 @@ import glob
 import json
 import logging
 import os
-# set gpu private
+# set optimization flag
+os.environ['CUDA_CACHE_DISABLE'] = '0'
 os.environ['TF_GPU_THREAD_MODE'] = 'gpu_private'
 import tensorflow as tf
 
@@ -68,7 +69,7 @@ if __name__ == "__main__":
     epochs = 100
     patience = 10
     batch_size = 10
-    only_evaluate = True
+    only_evaluate = False
     training_log_filename = "training_log.csv"
     results_filename = 'eval.json'
 

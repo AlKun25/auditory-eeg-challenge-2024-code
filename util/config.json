@@ -1,5 +1,5 @@
 {
-  "dataset_folder": "/content/MyDrive/eeg",
+  "dataset_folder": "/home/kunal/eeg_data",
   "derivatives_folder": "derivatives",
   "preprocessed_eeg_folder": "preprocessed_eeg",
   "preprocessed_stimuli_folder": "preprocessed_stimuli",

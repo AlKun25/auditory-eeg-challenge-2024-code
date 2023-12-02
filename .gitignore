@@ -161,7 +161,7 @@ cython_debug/
 .idea
 
 # Specific for tis project
-task*/experiments/results*/
+task*/experiments/results_vlaai*/
 *condor*
 .err
 .out
